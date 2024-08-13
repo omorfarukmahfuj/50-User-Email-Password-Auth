@@ -14,7 +14,6 @@ const Home = () => {
     const termsAccepted = e.target.terms.checked;
     console.log(email, password, termsAccepted);
 
-
     // Reset Error
     setSignUpSuccess('');
     setSignUpError('');
@@ -32,7 +31,6 @@ const Home = () => {
       setSignUpError('Please accepted the terms & conditions');
       return;
     }
-
 
     // Create User
     createUserWithEmailAndPassword(auth, email, password)
@@ -102,10 +100,6 @@ const Home = () => {
                     <a className='text-primary' href=""> Terms & Conditions</a>
                   </label>
                 </div>
-
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                </label>
               </div>
 
               {/* Sign Up Error Message */}
