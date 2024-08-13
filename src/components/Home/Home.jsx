@@ -11,19 +11,25 @@ const Home = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const termsAccepted = e.target.terms.checked;
+    console.log(email, password, termsAccepted);
 
 
     // Reset Error
     setSignUpSuccess('');
     setSignUpError('');
 
+    // Input Field Validation
     if (password.length < 6) {
       setSignUpError('Password should be at least 6 characters or longer');
       return;
     }
     else if (!/[A-Z]/.test(password)) {
       setSignUpError('Password should have at least 1 uppercase character');
+      return;
+    }
+    else if (!termsAccepted) {
+      setSignUpError('Please accepted the terms & conditions');
       return;
     }
 
@@ -90,6 +96,13 @@ const Home = () => {
                     }
                   </span>
                 </div>
+                <div className='flex  gap-3 mt-3'>
+                  <input type="checkbox" name="terms" id="terms" />
+                  <label htmlFor="terms">Accept our
+                    <a className='text-primary' href=""> Terms & Conditions</a>
+                  </label>
+                </div>
+
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
@@ -135,7 +148,7 @@ const Home = () => {
                 </div>
               }
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-primary">Sign Up</button>
               </div>
             </form>
 
