@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const navLinks = <>
-    <li><NavLink to="/">Home</NavLink></li>
-    <li><NavLink to="/login">Login</NavLink></li>
-    <li><NavLink to="/register">Register</NavLink></li>
+    <li><NavLink to="/" className="ml-7">Home</NavLink></li>
+    <li><NavLink to="/login" className="ml-7">Login</NavLink></li>
+    <li><NavLink to="/register" className="ml-7">Register</NavLink></li>
   </>
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar justify-center bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

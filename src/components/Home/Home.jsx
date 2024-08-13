@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import auth from '../../firebase/firebase.config';
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [signUpError, setSignUpError] = useState('');
@@ -141,6 +142,7 @@ const Home = () => {
                   <span>{signUpSuccess}</span>
                 </div>
               }
+              <p className='mt-4'>Already have an account? Please <Link to="/login" className='text-primary'>Login</Link></p>
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Sign Up</button>
               </div>

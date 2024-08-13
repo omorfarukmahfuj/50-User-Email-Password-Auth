@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import auth from '../../firebase/firebase.config';
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const handleLogin = e => {
+  const emailRef = useRef(null);
+
+  const handleLogin = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -30,6 +33,35 @@ const Login = () => {
       })
 
   }
+
+  const handleForgetPassword = e => {
+    const email = emailRef.current.value;
+    // Reset Error
+    setLoginSuccess('');
+    setLoginError('');
+    if (!email) {
+      setLoginError("Please enter your email");
+      return;
+    }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setLoginError("Please enter a valid email");
+      return;
+    }
+    console.log(email);
+
+    // Send Validation Email
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setLoginSuccess("Please check your email");
+      })
+      .catch(error => {
+        setLoginError(error);
+      })
+  }
+
+
+
+
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
@@ -56,6 +88,7 @@ const Login = () => {
                   type="email"
                   name='email'
                   placeholder="email"
+                  ref={emailRef}
                   className="input input-bordered"
                   required />
               </div>
@@ -81,10 +114,9 @@ const Login = () => {
                 </div>
 
                 <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                  <a onClick={handleForgetPassword} href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
               </div>
-
               {/* Login Error Message */}
               {
                 loginError && <div
@@ -124,6 +156,7 @@ const Login = () => {
                   <span>{loginSuccess}</span>
                 </div>
               }
+              <p>New to this website? Please <Link to="/" className='text-primary'>Sign Up</Link></p>
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Login</button>
               </div>

@@ -23,7 +23,6 @@ const Register = () => {
   }
   return (
     <div>
-      <h2 className="text-3xl">Please Register</h2>
       <form onSubmit={handleRegister} className='w-1/3 mx-auto mt-8'>
         {/* Input Email */}
         <label className="input input-bordered flex items-center gap-2">
@@ -69,7 +68,7 @@ const Register = () => {
         </label>
         <br />
         {/* Input Submit */}
-        <input type="submit" value="Submit" className="btn w-full" />
+        <input type="submit" value="Submit" className="btn btn-primary w-full" />
       </form>
     </div>
   );
