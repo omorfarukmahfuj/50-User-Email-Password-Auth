@@ -1,14 +1,16 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import React, { useState } from 'react';
 import auth from '../../firebase/firebase.config';
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
   const [signUpError, setSignUpError] = useState('');
   const [signUpSuccess, setSignUpSuccess] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const handleLogin = e => {
+  const handleSignUp = e => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -39,6 +41,12 @@ const Home = () => {
         console.log(result.user);
         setSignUpSuccess('User Created Successfully.')
 
+        // Send Verification Email
+        sendEmailVerification(result.user)
+          .then(() => {
+            toast("Please check your email and verify your account");
+          })
+
       })
       .catch(error => {
         console.error(error);
@@ -48,6 +56,7 @@ const Home = () => {
   }
   return (
     <div>
+      <ToastContainer/>
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse gap-52">
           {/* Login Info */}
@@ -60,7 +69,7 @@ const Home = () => {
 
           {/* Login Form */}
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <form className="card-body" onSubmit={handleLogin}>
+            <form className="card-body" onSubmit={handleSignUp}>
 
               {/* Email */}
               <div className="form-control">

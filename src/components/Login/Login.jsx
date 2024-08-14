@@ -10,7 +10,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = useRef(null);
 
-  const handleLogin = () => {
+  const handleLogin = e => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -24,8 +24,11 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(result => {
         console.log(result.user);
-        setLoginSuccess('Login Successfully.')
-
+        if (result.user.emailVerified) {
+          setLoginSuccess('User Logged In Successfully')
+        } else {
+          setLoginError('Please verify your email address')
+        }
       })
       .catch(error => {
         console.error(error);
@@ -58,9 +61,6 @@ const Login = () => {
         setLoginError(error);
       })
   }
-
-
-
 
   return (
     <div>
